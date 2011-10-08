@@ -33,6 +33,7 @@ test("exists()", function() {
 });
 
 test("find()", function() {
+
 	var result;
 	
 	result = this.ts.find('start', this.str);
@@ -41,6 +42,11 @@ test("find()", function() {
 	result = this.ts.find('off', this.str);
 	equal(result.length, 2, "Find the 2 occurrences of 'off'");
 	equal(result[0].index, 21, "Find the index of the 1st occurrence of 'off'");
+	equal(result[1].index, 274, "Find the index of the 2nd occurrence of 'off'");
+	result = this.ts.find('peel more layers of the onion', this.str);
+	equal(result.length, 1, "Find the 1 occurrence of the sentance 'peel more layers of the onion'");
+	result = this.ts.find('\\w+ion', this.str);
+	equal(result.length, 3, "Find the 3 occurrences of the regex \\w+ion'");
 	result = this.ts.find('Bill Gates', this.str);
 	equal(result.length, 0, "Try and find 'Bill Gates'");
 	

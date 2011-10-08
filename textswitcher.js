@@ -1,4 +1,5 @@
 var TextSwitcher = function() {
+
 	this.exists = function(needle, haystack) {
 		var regex;
 		if(typeof needle === 'string' && typeof haystack === 'string') {
@@ -26,5 +27,5 @@ var TextSwitcher = function() {
 		} else {
 			return false;
 		}
-	}
+	};
 }
