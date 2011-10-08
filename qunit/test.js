@@ -18,17 +18,22 @@ test("exists()", function() {
   var result;
              
 	result = this.ts.exists('first', this.str);
-	equal(result, true, "Find the word 'first'");
+	ok(result, "Find the word 'first'");
+	
 	result = this.ts.exists('But if you keep going', this.str);
-	equal(result, true, "Find the sentence 'But if you keep going'");
+	ok(result, "Find the sentence 'But if you keep going'");
+	
 	result = this.ts.exists('microsoft', this.str);
-	equal(result, false, "Find the word 'microsoft'");
+	ok(!result, "Find the word 'microsoft'");
+	
 	result = this.ts.exists(0, this.str);
-	equal(result, false, "Try and find an integer");
+	ok(!result, "Try and find an integer");
+	
 	result = this.ts.exists('people', undefined);
-	equal(result, false, "Supply undefined as the haystack");
+	ok(!result, "Supply undefined as the haystack");
+	
 	result = this.ts.exists(undefined, this.str);
-	equal(result, false, "Supply undefined as the search");
+	ok(!result, "Supply undefined as the search");
 	
 });
 
@@ -39,15 +44,45 @@ test("find()", function() {
 	result = this.ts.find('start', this.str);
 	equal(result.length, 1, "Find the one occurrence of 'start'");
 	equal(result[0].index, 15, "Find the index of the occurrence of 'start'");
+	
 	result = this.ts.find('off', this.str);
 	equal(result.length, 2, "Find the 2 occurrences of 'off'");
 	equal(result[0].index, 21, "Find the index of the 1st occurrence of 'off'");
 	equal(result[1].index, 274, "Find the index of the 2nd occurrence of 'off'");
+	
 	result = this.ts.find('peel more layers of the onion', this.str);
-	equal(result.length, 1, "Find the 1 occurrence of the sentance 'peel more layers of the onion'");
+	equal(result.length, 1, "Find the 1 occurrence of the sentence 'peel more layers of the onion'");
+	
 	result = this.ts.find('\\w+ion', this.str);
 	equal(result.length, 3, "Find the 3 occurrences of the regex \\w+ion'");
+	
 	result = this.ts.find('Bill Gates', this.str);
 	equal(result.length, 0, "Try and find 'Bill Gates'");
 	
+	result = this.ts.find(null, this.str);
+	equal(result.length, 0, "Try and find null");
+	
+	result = this.ts.find('start', null);
+	equal(result.length, 0, "Try and find start in null");
+	
 });
+
+
+test("replace()", function() {
+
+	var result;
+	
+	result = this.ts.replace('solve', 'fix', this.str);
+	ok(this.ts.exists('fix', result), "Check the word 'fix' is now in the string");
+	ok(!this.ts.exists('solve', result), "Check the word 'solve' is no longer in the string");
+	
+	result = this.ts.replace('o', 0, this.str);
+	ok(this.ts.exists(0, result), 'Check that the integer 1 exists');
+	console.log(result);
+	
+	find1 = this.ts.find(0, result);
+	equal(find1[0].index, 6, "Find the index of the 1st occurrence of 1");
+	equal(find1.length, 26, "Check that 26 occurrences of 0 were found");
+		
+});
+

@@ -2,7 +2,7 @@ var TextSwitcher = function() {
 
 	this.exists = function(needle, haystack) {
 		var regex;
-		if(typeof needle === 'string' && typeof haystack === 'string') {
+		if(typeof haystack === 'string' && needle !== undefined) {
 			regex = new RegExp(needle, "g");
 			return regex.test(haystack);
 		} else {
@@ -13,7 +13,7 @@ var TextSwitcher = function() {
 	this.find = function(needle, haystack) {
 		var regex, match, results = [];
 		
-		if(typeof needle === 'string' && typeof haystack === 'string') {
+		if(typeof haystack === 'string' && needle !== undefined) {
 			regex = new RegExp(needle, "g");			
 			do {
 				match = regex.exec(haystack);
@@ -22,10 +22,21 @@ var TextSwitcher = function() {
 				}
 			} while (match);
 			
-			return results;
-			
+		}
+		
+		return results;
+		
+	};
+	
+	this.replace = function(find, replace, str) {
+		var regex;
+		
+		if(typeof find === 'string' && replace !== undefined && typeof str === 'string') {
+			regex = new RegExp(find, "g");	
+			return str.replace(regex, replace, str);			
 		} else {
 			return false;
 		}
+		
 	};
 }
