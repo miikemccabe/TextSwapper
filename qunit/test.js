@@ -86,3 +86,16 @@ test("replace()", function() {
 		
 });
 
+test("getFlags()", function() {
+	
+	equal(this.ts.getFlags(), 'g', "Default flags should be case sensitive and not global");
+	
+	this.ts.global = false;
+	equal(this.ts.getFlags(), '', "Flags should not be global");
+	
+	this.ts.caseSensitive = false;
+	equal(this.ts.getFlags(), 'i', "Flags should not be global and be case insensitive");
+
+	
+});
+
