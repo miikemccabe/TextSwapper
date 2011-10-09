@@ -40,12 +40,16 @@ var TextSwitcher = function() {
 	this.replace = function(find, replace, str) {
 		var regex;
 		
-		if(typeof find === 'string' && replace !== undefined && typeof str === 'string') {
+		if(typeof find !== undefined && replace !== undefined && typeof str === 'string') {
 			regex = new RegExp(find, this.getFlags());	
 			return str.replace(regex, replace, str);			
 		} else {
 			return false;
 		}
 		
+	};
+	
+	this.highlight = function(input, start, end) {
+		input.setSelectionRange(start, end);
 	};
 }
