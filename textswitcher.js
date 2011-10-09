@@ -3,27 +3,34 @@ var TextSwitcher = function() {
 	this.global = true;
 	this.caseSensitive = true;
 	
-	this.getFlags = function() {
+	this.find = function(input, word) {
+		var result = this._find(word, input.value);
+		var start = result[0].index;
+		var end = start + word.length;
+		this._highlight(input, result[0].index, end);
+	}
+	
+	this._getFlags = function() {
 		var flags = this.global ? 'g' : '';
 		flags += this.caseSensitive ? '' : 'i';
 		return flags;
 	};
 
-	this.exists = function(needle, haystack) {
+	this._exists = function(needle, haystack) {
 		var regex;
 		if(typeof haystack === 'string' && needle !== undefined) {
-			regex = new RegExp(needle, this.getFlags());
+			regex = new RegExp(needle, this._getFlags());
 			return regex.test(haystack);
 		} else {
 			return false;
 		}
 	};
 	
-	this.find = function(needle, haystack) {
+	this._find = function(needle, haystack) {
 		var regex, match, results = [];
 		
 		if(typeof haystack === 'string' && needle !== undefined) {
-			regex = new RegExp(needle, this.getFlags());			
+			regex = new RegExp(needle, this._getFlags());			
 			do {
 				match = regex.exec(haystack);
 				if(match) {
@@ -37,11 +44,11 @@ var TextSwitcher = function() {
 		
 	};
 	
-	this.replace = function(find, replace, str) {
+	this._replace = function(find, replace, str) {
 		var regex;
 		
 		if(typeof find !== undefined && replace !== undefined && typeof str === 'string') {
-			regex = new RegExp(find, this.getFlags());	
+			regex = new RegExp(find, this._getFlags());	
 			return str.replace(regex, replace, str);			
 		} else {
 			return false;
@@ -49,7 +56,7 @@ var TextSwitcher = function() {
 		
 	};
 	
-	this.highlight = function(input, start, end) {
+	this._highlight = function(input, start, end) {
 		input.setSelectionRange(start, end);
 	};
 }

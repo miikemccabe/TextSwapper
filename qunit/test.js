@@ -21,99 +21,108 @@ module("TextSwitcher", {
 	}
 });
 
-test("exists()", function() {
+test("find()", function() {
+	this.ts.find(this.textarea, 'When');
+	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
+	
+	this.ts.find(this.textarea, 'first');
+	equal(window.getSelection().toString(), 'first', 'The word \'first\' should be highlighted');
+
+});
+
+test("_exists()", function() {
              
   var result;
              
-	result = this.ts.exists('first', this.str);
+	result = this.ts._exists('first', this.str);
 	ok(result, "Find the word 'first'");
 	
-	result = this.ts.exists('But if you keep going', this.str);
+	result = this.ts._exists('But if you keep going', this.str);
 	ok(result, "Find the sentence 'But if you keep going'");
 	
-	result = this.ts.exists('microsoft', this.str);
+	result = this.ts._exists('microsoft', this.str);
 	ok(!result, "Find the word 'microsoft'");
 	
-	result = this.ts.exists(0, this.str);
+	result = this.ts._exists(0, this.str);
 	ok(!result, "Try and find an integer");
 	
-	result = this.ts.exists('people', undefined);
+	result = this.ts._exists('people', undefined);
 	ok(!result, "Supply undefined as the haystack");
 	
-	result = this.ts.exists(undefined, this.str);
+	result = this.ts._exists(undefined, this.str);
 	ok(!result, "Supply undefined as the search");
 	
 });
 
-test("find()", function() {
+test("_find()", function() {
 
 	var result;
 	
-	result = this.ts.find('start', this.str);
+	result = this.ts._find('start', this.str);
 	equal(result.length, 1, "Find the one occurrence of 'start'");
 	equal(result[0].index, 15, "Find the index of the occurrence of 'start'");	
 	
-	result = this.ts.find('off', this.str);
+	result = this.ts._find('off', this.str);
 	equal(result.length, 2, "Find the 2 occurrences of 'off'");
 	equal(result[0].index, 21, "Find the index of the 1st occurrence of 'off'");
 	equal(result[1].index, 274, "Find the index of the 2nd occurrence of 'off'");
 	
-	result = this.ts.find('peel more layers of the onion', this.str);
+	result = this.ts._find('peel more layers of the onion', this.str);
 	equal(result.length, 1, "Find the 1 occurrence of the sentence 'peel more layers of the onion'");
 	
-	result = this.ts.find('\\w+ion', this.str);
+	result = this.ts._find('\\w+ion', this.str);
 	equal(result.length, 3, "Find the 3 occurrences of the regex \\w+ion'");
 	
-	result = this.ts.find('Bill Gates', this.str);
+	result = this.ts._find('Bill Gates', this.str);
 	equal(result.length, 0, "Try and find 'Bill Gates'");
 	
-	result = this.ts.find(null, this.str);
+	result = this.ts._find(null, this.str);
 	equal(result.length, 0, "Try and find null");
 	
-	result = this.ts.find('start', null);
+	result = this.ts._find('start', null);
 	equal(result.length, 0, "Try and find start in null");
 	
 });
 
 
-test("replace()", function() {
+test("_replace()", function() {
 
 	var result;
 	
-	result = this.ts.replace('solve', 'fix', this.str);
-	ok(this.ts.exists('fix', result), "Check the word 'fix' is now in the string");
-	ok(!this.ts.exists('solve', result), "Check the word 'solve' is no longer in the string");
+	result = this.ts._replace('solve', 'fix', this.str);
+	ok(this.ts._exists('fix', result), "Check the word 'fix' is now in the string");
+	ok(!this.ts._exists('solve', result), "Check the word 'solve' is no longer in the string");
 	
-	result = this.ts.replace('o', 0, this.str);
-	ok(this.ts.exists(0, result), 'Check that the integer 0 exists');
+	result = this.ts._replace('o', 0, this.str);
+	ok(this.ts._exists(0, result), 'Check that the integer 0 _exists');
 	console.log(result);
 	
-	find1 = this.ts.find(0, result);
+	find1 = this.ts._find(0, result);
 	equal(find1[0].index, 6, "Find the index of the 1st occurrence of 0");
 	equal(find1.length, 26, "Check that 26 occurrences of 0 were found");
 	
-	result = this.ts.replace(0, 'o', this.str);
-	ok(!this.ts.exists(0, result), "Check that the integer 0 doesn't exist anymore");
+	result = this.ts._replace(0, 'o', this.str);
+	ok(!this.ts._exists(0, result), "Check that the integer 0 doesn't exist anymore");
 	console.log(result);
 		
 });
 
-test("getFlags()", function() {
+test("_getFlags()", function() {
 	
-	equal(this.ts.getFlags(), 'g', "Default flags should be case sensitive and not global");
+	equal(this.ts._getFlags(), 'g', "Default flags should be case sensitive and not global");
 	
 	this.ts.global = false;
-	equal(this.ts.getFlags(), '', "Flags should not be global");
+	equal(this.ts._getFlags(), '', "Flags should not be global");
 	
 	this.ts.caseSensitive = false;
-	equal(this.ts.getFlags(), 'i', "Flags should not be global and be case insensitive");
+	equal(this.ts._getFlags(), 'i', "Flags should not be global and be case insensitive");
 
 	
 });
 
-test("highlight()", function() {
+test("_highlight()", function() {
 	
-	this.ts.highlight(this.textarea, 0, 4);
+	this.ts._highlight(this.textarea, 0, 4);
 	
 	equal(window.getSelection().toString(), 'When', 'Highlight range 0-4, should be the word \'when\'');
 	
