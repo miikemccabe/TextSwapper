@@ -130,9 +130,9 @@ test("_getFlags()", function() {
 	
 });
 
-test("_highlight()", function() {
-	
-	this.ts._highlight(this.textarea, 0, 4);
+test("_select()", function() {
+	console.log(this.ts);
+	this.ts._select(this.textarea, 0, 4);
 	
 	equal(window.getSelection().toString(), 'When', 'Highlight range 0-4, should be the word \'when\'');
 	
