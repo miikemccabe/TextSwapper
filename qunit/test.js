@@ -24,19 +24,10 @@ module("TextSwapper", {
 test("find()", function() {
 	this.ts.find(this.textarea, 'When');
 	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
+	equal(this.ts.found[0][0], 'When', 'The word \'When\' should be in the found array');
 	
 	this.ts.find(this.textarea, 'first');
 	equal(window.getSelection().toString(), 'first', 'The word \'first\' should be highlighted');
-
-});
-
-test("findNext()", function() {
-	var found = this.ts.find(this.textarea, 'you');
-	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
-	equal(found, 5, 'The index of the next \'you\' should be 40');
-	
-	var nextFound = this.ts.findNext();
-	equal(nextFound, 40, 'The index of the next \'you\' should be 40');
 
 });
 
