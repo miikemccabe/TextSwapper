@@ -1,13 +1,27 @@
-var TextSwitcher = function() {
+var TextSwapper = function() {
 
 	this.global = true;
 	this.caseSensitive = true;
+	this.found = [];
+	this.foundIndex;
+	
+	this.findNext = function() {
+		if(this.foundIndex) {
+			this.foundIndex++;
+			var start = this.found[this.foundIndex].index;
+			var end = start + this.found[this.foundIndex][0].length;
+			this._highlight(input, this.found[++this.foundIndex].index, end);
+		}
+		return this.foundIndex;
+	}
 	
 	this.find = function(input, word) {
-		var result = this._find(word, input.value);
-		var start = result[0].index;
+		this.found = this._find(word, input.value);
+		this.foundIndex = this.found[0].index;
+		var start = this.found[0].index;
 		var end = start + word.length;
-		this._highlight(input, result[0].index, end);
+		this._highlight(input, this.found[0].index, end);
+		return this.foundIndex;
 	}
 	
 	this._getFlags = function() {

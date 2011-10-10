@@ -1,5 +1,5 @@
 
-module("TextSwitcher", {
+module("TextSwapper", {
 	setup: function() { 
 		this.str = 'When you first start off trying to solve a problem,\
                the first solutions you come up with are very complex,\
@@ -8,8 +8,8 @@ module("TextSwitcher", {
                off, you can often times arrive at some very elegant and\
                simple solutions.';
              
-		this.ts = new TextSwitcher();
-		ok(this.ts, 'The TextSwitcher was created successfully');
+		this.ts = new TextSwapper();
+		ok(this.ts, 'The TextSwapper was created successfully');
 		
 		this.textarea = document.createElement('textarea');
 		this.textarea.value = this.str;
@@ -27,6 +27,16 @@ test("find()", function() {
 	
 	this.ts.find(this.textarea, 'first');
 	equal(window.getSelection().toString(), 'first', 'The word \'first\' should be highlighted');
+
+});
+
+test("findNext()", function() {
+	var found = this.ts.find(this.textarea, 'you');
+	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
+	equal(found, 5, 'The index of the next \'you\' should be 40');
+	
+	var nextFound = this.ts.findNext();
+	equal(nextFound, 40, 'The index of the next \'you\' should be 40');
 
 });
 
