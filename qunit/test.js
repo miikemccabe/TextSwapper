@@ -21,6 +21,13 @@ module("TextSwapper", {
 	}
 });
 
+test("addInput()", function() {
+	this.ts.addInput(this.textarea);
+	equal(this.ts.inputs[0], this.textarea, 'Check that the input has been added');
+	
+	equal(this.ts.addInput(this.textarea), false, "Can't add the same input twice");
+});
+
 
 test("find()", function() {
 	this.ts.find(this.textarea, 'When');
