@@ -2,7 +2,7 @@
 module("TextSwapper", {
 	setup: function() { 
 		this.str = 'When you first start off trying to solve a problem,\
-               the first solutions you come up with are very complex,\
+		the first solutions you come up with are very complex,\
                and most people stop there. But if you keep going, and\
                live with the problem and peel more layers of the onion\
                off, you can often times arrive at some very elegant and\
@@ -17,18 +17,29 @@ module("TextSwapper", {
 		document.body.appendChild(this.textarea);
 	},
 	teardown: function() {
-		document.body.removeChild(this.textarea);
+		//document.body.removeChild(this.textarea);
 	}
 });
+
 
 test("find()", function() {
 	this.ts.find(this.textarea, 'When');
 	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
 	equal(this.ts.found[0][0], 'When', 'The word \'When\' should be in the found array');
 	
-	this.ts.find(this.textarea, 'first');
-	equal(window.getSelection().toString(), 'first', 'The word \'first\' should be highlighted');
+	this.ts.find(this.textarea, 'you');
+	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
+	equal(this.ts.found[1][0], 'you', 'The word \'you\' should be in the found array');
+	equal(this.ts.found.length, 4 ,'Should have found 4 you\'s');
 
+});
+
+test("findNext()", function() {
+	this.ts.find(this.textarea, 'you');
+	equal(this.ts.foundIndex, 0, 'Found index should be 0');
+	this.ts.findNext();
+	equal(this.ts.foundIndex, 1, 'Found index should be 1');
+	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
 });
 
 test("_exists()", function() {
@@ -66,7 +77,7 @@ test("_find()", function() {
 	result = this.ts._find('off', this.str);
 	equal(result.length, 2, "Find the 2 occurrences of 'off'");
 	equal(result[0].index, 21, "Find the index of the 1st occurrence of 'off'");
-	equal(result[1].index, 274, "Find the index of the 2nd occurrence of 'off'");
+	equal(result[1].index, 261, "Find the index of the 2nd occurrence of 'off'");
 	
 	result = this.ts._find('peel more layers of the onion', this.str);
 	equal(result.length, 1, "Find the 1 occurrence of the sentence 'peel more layers of the onion'");
