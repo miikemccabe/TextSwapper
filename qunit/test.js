@@ -31,13 +31,22 @@ test("find()", function() {
 	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
 	equal(this.ts.found[1][0], 'you', 'The word \'you\' should be in the found array');
 	equal(this.ts.found.length, 4 ,'Should have found 4 you\'s');
+	
+	this.ts.find(this.textarea, 'bill');
+	equal(this.ts.found.length, 0, 'Check that nothing was found for \'bill\'');
 
 });
 
 test("findNext()", function() {
+	
+	this.ts.find(this.textarea, 'bill');
+	equal(this.ts.findNext(), false, 'Check that nothing was found for \'bill\'');
+	
 	this.ts.find(this.textarea, 'you');
 	equal(this.ts.foundIndex, 0, 'Found index should be 0');
-	this.ts.findNext();
+	
+	var next = this.ts.findNext();
+	equal(next[0], 'you', 'Check that findNext() has returned the next match');
 	equal(this.ts.foundIndex, 1, 'Found index should be 1');
 	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
 });
