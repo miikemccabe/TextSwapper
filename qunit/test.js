@@ -41,6 +41,12 @@ test("find()", function() {
 	
 	this.ts.find(this.textarea, 'bill');
 	equal(this.ts.found.length, 0, 'Check that nothing was found for \'bill\'');
+	
+	this.ts.find(this.textarea, '[a-z]*ee[a-z]*');
+	console.log(this.ts.found);
+	equal(window.getSelection().toString(), 'keep', 'The word \'keep\' should be highlighted');
+	equal(this.ts.found[1][0], 'peel', 'The word \'peel\' should be in the found array');
+	equal(this.ts.found.length, 2 ,'Should have found 2 you\'s');
 
 });
 

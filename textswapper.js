@@ -30,7 +30,7 @@ var TextSwapper = function() {
 		if(this.found.length > 0) {
 			this.foundIndex = 0;
 			var start = this.found[0].index;
-			var end = start + word.length;
+			var end = start + this.found[0][0].length;
 			this.input = input;
 			this._select(this.input, this.found[0].index, end);
 		}
