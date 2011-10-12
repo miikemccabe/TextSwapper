@@ -1,0 +1,34 @@
+<html>
+	<head>
+		<title></title>
+		<script src="textswapper.js"></script>
+	</head>
+	<body>
+	<form>
+	<textarea id="test" cols="50" rows="10">When you first start off trying to solve a problem, the first solutions you come up with are very complex, and most people stop there. But if you keep going, and live with the problem and peel more layers of the onion off, you can often times arrive at some very elegant and simple solutions.
+	</textarea>
+	</form>
+	<div id="controls">
+	<input id="searchBox" />
+	<a href="javascript:find()">Find</a> | <a href="javascript:findNext()">Find Next</a>
+	<br />
+	<input id="replaceBox" />
+	</div>
+		<script type="text/javascript">
+		var ts = new TextSwapper();
+		var input = document.getElementById('test')
+		ts.addInput(input);
+		
+		var searchBox = document.getElementById('searchBox');
+		
+		function find() {
+			ts.find(input, searchBox.value);
+		}
+		
+		function findNext() {
+			ts.findNext();
+		}
+		
+		</script>
+	</body>
+</html>
