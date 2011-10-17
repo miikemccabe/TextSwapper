@@ -19,12 +19,12 @@
 		<script type="text/javascript">
 		var ts = new TextSwapper();
 		var input = document.getElementById('test2')
-		ts.addInput(input);
+		ts.setInput(input);
 		
 		var searchBox = document.getElementById('searchBox');
 		
 		function find() {
-			ts.find(input, searchBox.value);
+			ts.find(searchBox.value);
 		}
 		
 		function findNext() {

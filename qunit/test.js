@@ -32,6 +32,7 @@ test("setInput()", function() {
 
 
 test("find()", function() {
+	equal(this.ts.find('When'), false, "Check it fails gracefully when no input has been set.");
 	this.ts.setInput(this.textarea);
 	this.ts.find('When');
 	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
@@ -46,7 +47,6 @@ test("find()", function() {
 	equal(this.ts.found.length, 0, 'Check that nothing was found for \'bill\'');
 	
 	this.ts.find('[a-z]*ee[a-z]*');
-	console.log(this.ts.found);
 	equal(window.getSelection().toString(), 'keep', 'The word \'keep\' should be highlighted');
 	equal(this.ts.found[1][0], 'peel', 'The word \'peel\' should be in the found array');
 	equal(this.ts.found.length, 2 ,'Should have found 2 you\'s');
@@ -136,7 +136,6 @@ test("_replace()", function() {
 	
 	result = this.ts._replace('o', 0, this.str);
 	ok(this.ts._exists(0, result), 'Check that the integer 0 _exists');
-	console.log(result);
 	
 	find1 = this.ts._find(0, result);
 	equal(find1[0].index, 6, "Find the index of the 1st occurrence of 0");
@@ -144,7 +143,6 @@ test("_replace()", function() {
 	
 	result = this.ts._replace(0, 'o', this.str);
 	ok(!this.ts._exists(0, result), "Check that the integer 0 doesn't exist anymore");
-	console.log(result);
 		
 });
 
@@ -162,10 +160,15 @@ test("_getFlags()", function() {
 });
 
 test("_select()", function() {
-	console.log(this.ts);
 	this.ts._select(this.textarea, 0, 4);
 	
 	equal(window.getSelection().toString(), 'When', 'Highlight range 0-4, should be the word \'when\'');
 	
+});
+
+test("_getSelection()", function() {
+	this.ts._select(this.textarea, 0, 4);
+	var result = this.ts._getSelection();
+	equal(result, 'When', "'When' should be selected");
 });
 

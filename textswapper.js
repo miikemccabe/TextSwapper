@@ -5,7 +5,6 @@
 var TextSwapper = function() {
 
 	this.search;
-	this.haystacks;
 	
 	this.input;
 	
@@ -24,12 +23,19 @@ var TextSwapper = function() {
 	}
 	
 	this.find = function(word) {
-		this.found = this._find(word, this.input.value);
-		if(this.found.length > 0) {
-			this.foundIndex = 0;
-			var start = this.found[0].index;
-			var end = start + this.found[0][0].length;
-			this._select(this.input, this.found[0].index, end);
+		try {
+			this.found = this._find(word, this.input.value);
+			if(this.found.length > 0) {
+				this.foundIndex = 0;
+				var start = this.found[0].index;
+				var end = start + this.found[0][0].length;
+				this._select(this.input, this.found[0].index, end);
+			}
+		} catch(e) {
+			if(this.input === undefined) {
+				console.log("this.input is not set");
+				return false;
+			}
 		}
 	};
 	
@@ -123,5 +129,10 @@ var TextSwapper = function() {
 	*/
 	this._select = function(input, start, end) {
 		input.setSelectionRange(start, end);
+	};
+	
+	this._getSelection = function() {
+		console.log(document.activeElement);
+		return window.getSelection().toString();
 	};
 }
