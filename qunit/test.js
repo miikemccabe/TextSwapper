@@ -1,12 +1,7 @@
 
 module("TextSwapper", {
 	setup: function() { 
-		this.str = 'When you first start off trying to solve a problem,\
-		the first solutions you come up with are very complex,\
-               and most people stop there. But if you keep going, and\
-               live with the problem and peel more layers of the onion\
-               off, you can often times arrive at some very elegant and\
-               simple solutions.';
+		this.str = 'When you first start off trying to solve a problem, the first solutions you come up with are very complex, and most people stop there. But if you keep going, and live with the problem and peel more layers of the onion off, you can often times arrive at some very elegant and simple solutions.';
              
 		this.ts = new TextSwapper();
 		ok(this.ts, 'The TextSwapper was created successfully');
@@ -21,28 +16,36 @@ module("TextSwapper", {
 	}
 });
 
-test("addInput()", function() {
-	this.ts.addInput(this.textarea);
-	equal(this.ts.inputs[0], this.textarea, 'Check that the input has been added');
+test("setInput()", function() {
+	this.ts.setInput(this.textarea);
+	equal(this.ts.input, this.textarea, 'Check that the input has been set');
 	
-	equal(this.ts.addInput(this.textarea), false, "Can't add the same input twice");
+	this.ts.setInput(null);
+	equal(this.ts.input, this.textarea, 'Check that the input is unchanged');
+	
+	var testDiv = document.createElement('div');
+	
+	this.ts.setInput(testDiv);
+	equal(this.ts.input, this.textarea, 'Try setting input as DIV. Check that the input is unchanged');
+	
 });
 
 
 test("find()", function() {
-	this.ts.find(this.textarea, 'When');
+	this.ts.setInput(this.textarea);
+	this.ts.find('When');
 	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
 	equal(this.ts.found[0][0], 'When', 'The word \'When\' should be in the found array');
 	
-	this.ts.find(this.textarea, 'you');
+	this.ts.find('you');
 	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
 	equal(this.ts.found[1][0], 'you', 'The word \'you\' should be in the found array');
 	equal(this.ts.found.length, 4 ,'Should have found 4 you\'s');
 	
-	this.ts.find(this.textarea, 'bill');
+	this.ts.find('bill');
 	equal(this.ts.found.length, 0, 'Check that nothing was found for \'bill\'');
 	
-	this.ts.find(this.textarea, '[a-z]*ee[a-z]*');
+	this.ts.find('[a-z]*ee[a-z]*');
 	console.log(this.ts.found);
 	equal(window.getSelection().toString(), 'keep', 'The word \'keep\' should be highlighted');
 	equal(this.ts.found[1][0], 'peel', 'The word \'peel\' should be in the found array');
@@ -51,11 +54,15 @@ test("find()", function() {
 });
 
 test("findNext()", function() {
-	
-	this.ts.find(this.textarea, 'bill');
+
+	this.ts.setInput(this.textarea);
+
+	equal(this.ts.findNext(), false, 'Check that false is returned when there is nothing to be found yet.');
+		
+	this.ts.find('bill');
 	equal(this.ts.findNext(), false, 'Check that nothing was found for \'bill\'');
 	
-	this.ts.find(this.textarea, 'you');
+	this.ts.find('you');
 	equal(this.ts.foundIndex, 0, 'Found index should be 0');
 	
 	var next = this.ts.findNext();
@@ -99,7 +106,7 @@ test("_find()", function() {
 	result = this.ts._find('off', this.str);
 	equal(result.length, 2, "Find the 2 occurrences of 'off'");
 	equal(result[0].index, 21, "Find the index of the 1st occurrence of 'off'");
-	equal(result[1].index, 261, "Find the index of the 2nd occurrence of 'off'");
+	equal(result[1].index, 218, "Find the index of the 2nd occurrence of 'off'");
 	
 	result = this.ts._find('peel more layers of the onion', this.str);
 	equal(result.length, 1, "Find the 1 occurrence of the sentence 'peel more layers of the onion'");

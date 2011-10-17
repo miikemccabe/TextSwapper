@@ -7,7 +7,7 @@ var TextSwapper = function() {
 	this.search;
 	this.haystacks;
 	
-	this.inputs = [];
+	this.input;
 	
 	this.found;
 	this.foundIndex;
@@ -15,28 +15,28 @@ var TextSwapper = function() {
 	this.global = true;
 	this.caseSensitive = true;
 	
-	this.addInput = function(input) {
-		var count = this.inputs.length;
-		for(var i=0; i<count; i++) {
-			if(this.inputs[i] === input) {
-				return false;
+	this.setInput = function(input) {
+		if(input) {
+			if(input.nodeName === 'INPUT' || input.nodeName === 'TEXTAREA') {
+				this.input = input;
 			}
 		}
-		this.inputs.push(input);
 	}
 	
-	this.find = function(input, word) {
-		this.found = this._find(word, input.value);
+	this.find = function(word) {
+		this.found = this._find(word, this.input.value);
 		if(this.found.length > 0) {
 			this.foundIndex = 0;
 			var start = this.found[0].index;
 			var end = start + this.found[0][0].length;
-			this.input = input;
 			this._select(this.input, this.found[0].index, end);
 		}
 	};
 	
 	this.findNext = function() {
+		if(!this.found) {
+			return false;
+		}
 		if(this.found.length > 0) {
 			var i = ++this.foundIndex;
 			if(i === this.found.length) {
