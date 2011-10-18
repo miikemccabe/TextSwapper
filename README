@@ -7,4 +7,4 @@ Google Chrome extension for finding and replacing text.
 To do
 -----
 
-* Crashes when global is set to true. Need to create tests and fix this.
+* Crashes when global is set to false. Need to create tests and fix this.
