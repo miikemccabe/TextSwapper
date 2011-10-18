@@ -58,9 +58,19 @@ var TextSwapper = function() {
 		}
 	};
 	
+	this.replace = function(find, replace) {
+		var newString = this._replace(find, replace, this.input.value);
+		if(newString && newString !== this.input.value) {
+			this.input.value = newString;
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
 	/**
 	* Returns the flags to be used in RegExp
-	*	@returns {String} The flags based on TextSwapper's global and caseSensitive attributes
+	* @returns {String} The flags based on TextSwapper's global and caseSensitive attributes
 	*/	
 	this._getFlags = function() {
 		var flags = this.global ? 'g' : '';
@@ -80,7 +90,7 @@ var TextSwapper = function() {
 	
 	/**
 	* Uses the native RegExp object to find the needle in the haystack
-	*	@param {String} needle Text string or regex to search for
+	* @param {String} needle Text string or regex to search for
 	* @param {String} haystack Text string to search for the needle
 	* @returns {Array} An array of RegExp match objects
 	*/
@@ -104,7 +114,7 @@ var TextSwapper = function() {
 	
 	/**
 	* Uses the native RegExp object and the native string.replace to replace text
-	*	@param {String} find Text string or regex to search for
+	* @param {String} find Text string or regex to search for
 	* @param {String} replace Text string or regex for replacing
 	* @param {String} string   String to perfom the replace on
 	* @returns {String} Returns the string with the text replaced
@@ -132,7 +142,6 @@ var TextSwapper = function() {
 	};
 	
 	this._getSelection = function() {
-		console.log(document.activeElement);
 		return window.getSelection().toString();
 	};
 }

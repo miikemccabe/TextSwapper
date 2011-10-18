@@ -71,6 +71,19 @@ test("findNext()", function() {
 	equal(window.getSelection().toString(), 'you', 'The word \'you\' should be highlighted');
 });
 
+test("replace()", function() {
+	this.ts.setInput(this.textarea);
+	equal(this.ts.replace('onion', 'cheese'), true, "Replace 'onion' with 'cheese'");
+	
+	this.ts.find('cheese');
+	equal(window.getSelection().toString(), 'cheese', "Check that the textarea now contains the word 'cheese'");
+	
+	equal(this.ts.replace(null), false, "Check false is returned when there aren't enough arguments");
+	
+	equal(this.ts.replace('sausage', 'Linda McCartney Sausage'), false, "Check false is returned when the string can't be found");
+	
+});
+
 test("_exists()", function() {
              
   var result;

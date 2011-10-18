@@ -12,16 +12,17 @@
 	</form>
 	<div id="controls">
 	<input id="searchBox" />
-	<a href="javascript:find()">Find</a> | <a href="javascript:findNext()">Find Next</a>
+	<a href="javascript:find()">Find</a> | <a href="javascript:findNext()">Find Next</a> | <a href="javascript:replace()">Replace</a>
 	<br />
 	<input id="replaceBox" />
 	</div>
 		<script type="text/javascript">
 		var ts = new TextSwapper();
-		var input = document.getElementById('test2')
+		var input = document.getElementById('test')
 		ts.setInput(input);
 		
 		var searchBox = document.getElementById('searchBox');
+		var replaceBox = document.getElementById('replaceBox');
 		
 		function find() {
 			ts.find(searchBox.value);
@@ -29,6 +30,10 @@
 		
 		function findNext() {
 			ts.findNext();
+		}
+		
+		function replace() {
+			ts.replace(searchBox.value, replaceBox.value);
 		}
 		
 		</script>
