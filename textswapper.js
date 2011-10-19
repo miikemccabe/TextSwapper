@@ -15,21 +15,26 @@ var TextSwapper = function() {
 	this.caseSensitive = true;
 	
 	this.setInput = function(input) {
-		if(input) {
-			if(input.nodeName === 'INPUT' || input.nodeName === 'TEXTAREA') {
-				this.input = input;
-			}
+		var theInput = input || document.activeElement;
+		if(theInput.nodeName === 'INPUT' || theInput.nodeName === 'TEXTAREA') {
+			this.input = theInput;
 		}
 	}
 	
 	this.find = function(word) {
 		try {
+			if(this.input === undefined) {
+				this.setInput();
+			}
 			this.found = this._find(word, this.input.value);
 			if(this.found.length > 0) {
 				this.foundIndex = 0;
 				var start = this.found[0].index;
 				var end = start + this.found[0][0].length;
 				this._select(this.input, this.found[0].index, end);
+				return true;
+			} else {
+				return false;
 			}
 		} catch(e) {
 			if(this.input === undefined) {

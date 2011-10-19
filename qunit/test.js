@@ -12,11 +12,19 @@ module("TextSwapper", {
 		document.body.appendChild(this.textarea);
 	},
 	teardown: function() {
-		//document.body.removeChild(this.textarea);
+		document.body.removeChild(this.textarea);
 	}
 });
 
 test("setInput()", function() {
+
+	this.ts.setInput();
+	equal(this.ts.input, undefined, 'Check that the input is undefined');
+	
+	this.textarea.focus();
+	this.ts.setInput();
+	equal(this.ts.input, this.textarea, 'Check that the input is the textarea');
+	
 	this.ts.setInput(this.textarea);
 	equal(this.ts.input, this.textarea, 'Check that the input has been set');
 	
@@ -33,6 +41,9 @@ test("setInput()", function() {
 
 test("find()", function() {
 	equal(this.ts.find('When'), false, "Check it fails gracefully when no input has been set.");
+	this.textarea.focus();
+	equal(this.ts.find('When'), true, "Check it finds 'When' if the textarea has focus but no input has been set.");
+	
 	this.ts.setInput(this.textarea);
 	this.ts.find('When');
 	equal(window.getSelection().toString(), 'When', 'The word \'When\' should be highlighted');
