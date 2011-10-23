@@ -161,7 +161,7 @@ test("_replace()", function() {
 	result = this.ts._replace('o', 0, this.str);
 	ok(this.ts._exists(0, result), 'Check that the integer 0 _exists');
 	
-	find1 = this.ts._find(0, result);
+	var find1 = this.ts._find(0, result);
 	equal(find1[0].index, 6, "Find the index of the 1st occurrence of 0");
 	equal(find1.length, 26, "Check that 26 occurrences of 0 were found");
 	

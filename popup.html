@@ -1,0 +1,36 @@
+<div id="wrapper">
+<form>
+<input type="text" id="find" />
+<input type="text" id="replace" />
+<input type="submit" value="Find" id="submitFind" />
+<input type="submit" value="Find next" id="submitFindNext" />
+<input type="submit" value="Replace All" id="submitReplaceAll" />
+</form>
+<script type="text/javascript">
+
+document.getElementById('submitFind').addEventListener('click', function(evt) {
+	var findVal = document.getElementById('find').value;
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {"message":"find", "findVal" : findVal });
+	});
+	evt.preventDefault();
+});
+
+document.getElementById('submitFindNext').addEventListener('click', function(evt) {
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {"message":"findNext"});
+	});
+	evt.preventDefault();
+});
+
+document.getElementById('submitReplaceAll').addEventListener('click', function(evt) {
+	var findVal = document.getElementById('find').value;
+	var replaceVal = document.getElementById('replace').value;
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.sendRequest(tab.id, {"message":"replaceAll", "findVal" : findVal, "replaceVal" : replaceVal });
+	});
+	evt.preventDefault();
+});
+
+</script>
+</div>
