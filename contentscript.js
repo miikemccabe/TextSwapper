@@ -3,6 +3,7 @@ var ts;
 chrome.extension.onRequest.addListener(function(request, sender, response) {
 	if(!ts) {
 		ts = new TextSwapper();
+		ts.setInput();
 	}
 	if(request.message === 'find') {
 		ts.find(request.findVal);

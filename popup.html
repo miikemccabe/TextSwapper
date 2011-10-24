@@ -1,10 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Text Swapper</title>
+<style type="text/css">
+
+body {
+	font-family: Verdana;
+}
+
+#wrapper {
+	width: 240px;
+}
+
+#inputs input {
+	width: 110px;
+}
+
+.button {
+	margin: 5px 2px;
+	padding: 5px 8px;
+	border-radius: 10px;
+	font-size: 10px;
+	text-decoration: none;
+	background-color: #eee;
+	color: #555;
+	text-shadow: rgba(255,255,255,0.8) 0 1px 0;
+	width: 60px;
+	display: block;
+	text-align: center;
+}
+
+.button:hover {
+	background-color: #ddd;
+}
+
+.button.primary {
+	background-color: #3c5;
+	color: #fff;
+	text-shadow: rgba(0,0,0,0.7) 0 -1px 0;
+}
+
+.button.primary:hover {
+	background-color: #394;
+}
+
+#buttons a {
+	float: left;
+}
+
+</style>
+</head>
+<body>
 <div id="wrapper">
 <form>
-<input type="text" id="find" />
-<input type="text" id="replace" />
-<input type="submit" value="Find" id="submitFind" />
-<input type="submit" value="Find next" id="submitFindNext" />
-<input type="submit" value="Replace All" id="submitReplaceAll" />
+<div id="inputs">
+<input type="text" id="find" placeholder="Find" />
+<input type="text" id="replace" placeholder="Replace" />
+</div>
+<div id="buttons">
+<a href="#" id="submitFind" class="button primary">Find</a>
+<a href="#" id="submitFindNext" class="button">Find next</a>
+<a href="#" id="submitReplaceAll" class="button">Replace all</a>
+</div>
 </form>
 <script type="text/javascript">
 
@@ -34,3 +91,5 @@ document.getElementById('submitReplaceAll').addEventListener('click', function(e
 
 </script>
 </div>
+</body>
+</html>
